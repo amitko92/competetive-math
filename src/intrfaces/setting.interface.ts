@@ -1,5 +1,7 @@
+import type { GameDifficulty } from "../types/game-difficulty.type";
+
 export interface ISetting {
-    difficulty: string;
+    difficulty: GameDifficulty;
     numOfQuestions: number;
     timeLimitOfQuestion: number;
 }
