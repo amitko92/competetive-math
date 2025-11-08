@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import Header from './components/layout/Header';
+import SideBar from './components/layout/SideBar';
+import MainContent from './components/layout/MainContent';
 
 
 function App() {
 
 
   return (
-    <>
-    <p className='text-green-800'>Test!</p>
-    </>
+    <div className='h-[100dvh]'>
+      <Header />
+      <div className='min-h-[80dvh] flex'>
+        <SideBar />
+        <MainContent />
+      </div>
+    </div>
   );
 }
 
