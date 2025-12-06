@@ -1,8 +1,8 @@
 export const MathOperator = {
     plus: '+',
     minus: '-',
-    power: '*',
-    division: '/',
+    multiply: '*',
+    divide: '/',
     mod: '%'
 } as const;
 

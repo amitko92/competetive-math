@@ -7,7 +7,7 @@ function App() {
 
 
   return (
-    <div className='h-[100dvh] bg-stone-50'>
+    <div className='h-[100dvh] bg-slate-50'>
       <Header />
       <div className='min-h-[80dvh] flex'>
         <SideBar />

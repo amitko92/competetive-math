@@ -1,7 +1,7 @@
 export const GameActiveState = {
     active: 'active',
     betweenLevels: 'betweenLevels',
-    finsh: 'finsh',
+    finshed: 'finshed',
     start: 'start'
 } as const;
 

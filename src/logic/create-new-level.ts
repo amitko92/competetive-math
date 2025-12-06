@@ -1,25 +1,28 @@
 import type { IGameLevel, IQuestion } from "../intrfaces/game.interface";
-import type { GameDifficulty } from "../types/game-difficulty.type";
-import type { MathOperator } from "../types/math-operator.type";
+import { GameDifficulty } from "../types/game-difficulty.type";
+import { MathOperator } from "../types/math-operator.type";
 import generateQuestion from "./generate-question";
 
 function createNewLevel(
     difficulty: GameDifficulty,
     numOfQuestions: number,
-    operators: MathOperator[],
     level: number) {
 
-    const mewLevel: IGameLevel = {
+    const operators: MathOperator[] = calculateOperatorList(difficulty, level);
+
+    const newLevel: IGameLevel = {
+        levelStreak: 0,
         level: level,
         currentQuestionIndex: 0,
         operators: operators,
         questions: generateQuestions(difficulty, numOfQuestions, operators, level),
+        levelScore: 0
     };
 
-    return mewLevel;
+    return newLevel;
 }
 
-export function generateQuestions(difficulty: GameDifficulty,
+function generateQuestions(difficulty: GameDifficulty,
     numOfQuestions: number,
     operators: MathOperator[],
     level: number) {
@@ -33,18 +36,14 @@ export function generateQuestions(difficulty: GameDifficulty,
         questions.push({
             question: questionText,
             answer: answer,
-            userAnswer: '', 
+            userAnswer: '',
         });
     }
 
     return questions;
 }
 
-export function getAnswerForQuestion(question: string): number {
-    return evaluateMathExpression(question);
-}
-
-export function evaluateMathExpression(expression: string): number {
+function evaluateMathExpression(expression: string): number {
     // Remove whitespace and validate expression
     const sanitizedExpr = expression.replace(/\s+/g, '');
 
@@ -61,6 +60,57 @@ export function evaluateMathExpression(expression: string): number {
         console.error('Failed to evaluate expression:', expression);
         throw new Error('Invalid mathematical expression');
     }
+}
+
+function calculateOperatorList(difficulty: GameDifficulty,
+    level: number): MathOperator[] {
+
+    const operators = [] as MathOperator[];
+
+    if (level == 1) {
+
+        operators.push(MathOperator.plus);
+    }
+
+    if (level == 2) {
+
+        operators.push(MathOperator.minus);
+    }
+
+    if (level == 3) {
+
+        operators.push(MathOperator.minus, MathOperator.plus);
+
+        if (GameDifficulty.hard == difficulty || GameDifficulty.medium == difficulty) {
+            operators.push(MathOperator.minus);
+        }
+    }
+
+    if (level == 4) {
+
+        operators.push(MathOperator.multiply);
+    }
+
+    if (level == 5) {
+
+        operators.push(MathOperator.multiply, MathOperator.plus);
+
+        if (GameDifficulty.hard == difficulty || GameDifficulty.medium == difficulty) {
+            operators.push(MathOperator.multiply, MathOperator.plus, MathOperator.minus);
+        }
+    }
+
+    if (level == 6) {
+
+        operators.push(MathOperator.divide);
+    }
+
+    if (level == 7) {
+
+        operators.push(MathOperator.multiply, MathOperator.plus, MathOperator.minus, MathOperator.divide);
+    }
+
+    return operators;
 }
 
 export default createNewLevel;

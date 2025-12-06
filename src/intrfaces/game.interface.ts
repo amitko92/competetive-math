@@ -1,18 +1,22 @@
+import React from "react";
 import type { GameActiveState } from "../types/game-active-state.type";
 import type { MathOperator } from "../types/math-operator.type";
 
 export interface IGame {
-    score: number;
+    gameScore: number;
+    hearts: number;
+    highestStreak: number;
     gameActiveState: GameActiveState;
-    streak: number;
     currentLevel: IGameLevel;
-    timeRemaining: number;
+    inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 export interface IGameLevel {
     level: number;
+    levelScore: number;
     currentQuestionIndex: number;
     operators: MathOperator[];
+    levelStreak: number;
     questions: IQuestion[];
 }
 

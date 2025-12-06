@@ -13,7 +13,9 @@ type AppState = {
     setCurrentPage: (page: CurrentPage) => void;
     setUserInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
     resetGame: () => void;
-    startNewGame: (firstLevel: IGameLevel, timeRemaining: number) => void;
+    startNewLevel: (level: IGameLevel, hearts: number, scorePointsToAdd: number) => void;
+    updateLevel: (newGameLevel: IGameLevel) => void;
+    updateGame: (newGame: IGame) => void;
 }
 
 const useAppStore = create<AppState>((set) => ({
@@ -50,13 +52,28 @@ const useAppStore = create<AppState>((set) => ({
         ...state,
         game: { ...gameData },
     })),
-    startNewGame: (firstLevel: IGameLevel, timeRemaining: number) => set((state) => ({
+    startNewLevel: (level: IGameLevel, hearts: number, scorePointsToAdd: number) => set((state) => ({
+        ...state,
+        game: {
+            ...gameData,
+            hearts: hearts,
+            gameActiveState: GameActiveState.active,
+            currentLevel: { ...level },
+            gameScore: state.game.gameScore + scorePointsToAdd
+        },
+    })),
+    updateLevel: (newGameLevel: IGameLevel) => set((state) => ({
         ...state,
         game: {
             ...gameData,
             gameActiveState: GameActiveState.active,
-            timeRemaining: timeRemaining,
-            currentLevel: {...firstLevel}
+            currentLevel: { ...newGameLevel },
+        },
+    })),
+    updateGame: (newGame: IGame) => set((state) => ({
+        ...state,
+        game: {
+            ...newGame,
         },
     })),
 }));
@@ -65,6 +82,8 @@ export const useSetCurrentPage = () => useAppStore((state) => state.setCurrentPa
 export const useApp = () => useAppStore((state) => state.app);
 export const useGame = () => useAppStore((state) => state.game);
 export const useSetUserInput = () => useAppStore((state) => state.setUserInput);
-export const useStartNewGame = () => useAppStore((state) => state.startNewGame);
+export const useStartNewLevel = () => useAppStore((state) => state.startNewLevel);
+export const useUpdateLevel = () => useAppStore((state) => state.updateLevel);
+export const useUpdateGame = () => useAppStore((state) => state.updateGame);
 
 export default useAppStore;

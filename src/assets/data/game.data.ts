@@ -1,3 +1,4 @@
+import React from "react";
 import type { IGame, IGameLevel, IQuestion } from "../../intrfaces/game.interface";
 import { GameActiveState } from "../../types/game-active-state.type";
 import type { MathOperator } from "../../types/math-operator.type";
@@ -13,14 +14,17 @@ const gameLevelData: IGameLevel = {
     level: 1,
     operators: [] as MathOperator[],
     questions: [] as IQuestion[],
+    levelStreak: 0,
+    levelScore: 0,
 }
 
 const gameData: IGame = {
-    score: 0,
+    gameScore: 0,
     gameActiveState: GameActiveState.start,
-    streak: 0,
     currentLevel: gameLevelData,
-    timeRemaining: 0,
+    highestStreak: 0,
+    hearts: 5,
+    inputRef: React.createRef<HTMLInputElement>(),
 };
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp, useGame, useSetUserInput } from '../../../stores/app.store';
+import { useApp, useSetUserInput } from '../../../stores/app.store';
 import { CurrentPage } from '../../../types/current-page.type';
 import StartingGame from './StartingGame';
 import LevelGame from './LevelGame';
@@ -24,7 +24,6 @@ const Game = () => {
             <LevelGame />
             <FinishGame />
             <BetweenLevels />
-
         </div>
     );
 
